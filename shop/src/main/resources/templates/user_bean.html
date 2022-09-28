@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<!--model을 thymeleaf 문법으로 뽑아낸다-->
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 정의 빈 확인</title>
+</head>
+<body>
+<h1 th:with="say=${name} + '님 반갑습니다. ' + ${name} + '님 무기는 ' + ${weapon} + '입니다.'" th:text="${say}">반가워요.</h1>
+<!--th:with -> 지역변수-->
+<!--say에 값이 있으면 '반가워요.' 사라짐-->
+</body>
+</html>
