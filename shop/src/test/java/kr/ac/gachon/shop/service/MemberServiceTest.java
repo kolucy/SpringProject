@@ -9,7 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 
+import static org.hibernate.tool.schema.SchemaToolingLogging.LOGGER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestPropertySource(locations="classpath:application-test.properties")
@@ -42,4 +44,15 @@ class MemberServiceTest {
         assertEquals(member.getRole(), savedMember.getRole());
     }
 
+    @Test
+    @DisplayName("중복 회원 가입 테스트")
+    public void saveDuplicateMemberTest(){
+        Member member1 = createMember();
+        Member member2 = createMember();
+        memberService.saveMember(member1);
+        Throwable e = assertThrows(IllegalStateException.class, () -> {
+            memberService.saveMember(member2);});
+        LOGGER.info(e.getMessage());
+        assertEquals("이미 가입된 회원입니다.", e.getMessage());
+    }
 }

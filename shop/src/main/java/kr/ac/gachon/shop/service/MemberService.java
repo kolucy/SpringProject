@@ -15,7 +15,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public Member saveMember(Member member) {
-        validateDuplicateMember(member);
+        this.validateDuplicateMember(member);
         return memberRepository.save(member);
     }
 
