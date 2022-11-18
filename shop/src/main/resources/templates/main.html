@@ -5,6 +5,8 @@
 
 <div layout:fragment="content">
   <h1>메인페이지입니다.</h1>
+  <p th:text="${#authentication.name}"></p>
+  <p th:text="${#authentication.getDetails()}"></p>
 </div>
 
 </html>

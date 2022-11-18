@@ -1,0 +1,9 @@
+package kr.ac.gachon.shop.exception;
+
+public class OutOfStockException extends RuntimeException {
+
+    public OutOfStockException(String message) {
+        super(message);
+    }
+
+}

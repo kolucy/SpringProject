@@ -1,6 +1,8 @@
 package kr.ac.gachon.shop.entity;
 
 import kr.ac.gachon.shop.constant.ItemSellStatus;
+import kr.ac.gachon.shop.dto.ItemFormDto;
+import kr.ac.gachon.shop.exception.OutOfStockException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Item {
+public class Item  extends BaseEntity {
     @Id
     @Column(name="item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,6 +38,27 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; //상품 판매 상태
 
+    public void updateItem(ItemFormDto itemFormDto) {
+        this.itemNm = itemFormDto.getItemNm();
+        this.price = itemFormDto.getPrice();
+        this.stockNumber = itemFormDto.getStockNumber();
+        this.itemDetail = itemFormDto.getItemDetail();
+        this.itemSellStatus = itemFormDto.getItemSellStatus();
+    }
+
+    public void removeStock(int stockNumber){
+        int restStock = this.stockNumber - stockNumber;
+        if(restStock<0){
+            throw new OutOfStockException("상품의 재고가 부족 합니다. (현재 재고 수량: " + this.stockNumber + ")");
+        }
+        this.stockNumber = restStock;
+    }
+
+    public void addStock(int stockNumber){
+        this.stockNumber += stockNumber;
+    }
+
+    /*
     @ManyToMany
     @JoinTable(
             name = "member_item",
@@ -47,5 +70,6 @@ public class Item {
     private LocalDateTime regTime; // 동록 시간
 
     private LocalDateTime updateTime; // 수정 시간
+     */
 
 }

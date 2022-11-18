@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
@@ -26,8 +25,21 @@ public class OrderItem extends BaseEntity{
 
     private int count; //수량
 
-//    private LocalDateTime regTime;
+    public static OrderItem createOrderItem(Item item, int count) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setCount(count);
+        orderItem.setOrderPrice(item.getPrice());
+        item.removeStock(count);
+        return orderItem;
+    }
 
-//    private LocalDateTime updateTime;
+    public int getTotalPrice() {
+        return orderPrice*count;
+    }
+
+    public void cancel() {
+        this.getItem().addStock(count);
+    }
 
 }
