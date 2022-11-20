@@ -1,5 +1,7 @@
 package kr.ac.gachon.shop.config;
 
+import kr.ac.gachon.shop.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +15,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig {
     // Spring Security 5.7.0-M2 부터 기존 WebSecurityConfigureAdapter 방식에서 SecurityFilterChain 으로 변경 권장
+
+    @Autowired
+    MemberService memberService;
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         // 인증이 필요한 요청폼 설정

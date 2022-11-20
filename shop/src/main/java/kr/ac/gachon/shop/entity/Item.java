@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Item  extends BaseEntity {
+public class Item extends BaseEntity {
     @Id
     @Column(name="item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
